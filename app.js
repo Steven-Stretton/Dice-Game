@@ -10,18 +10,19 @@ GAME RULES:
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 */
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gameActive;
 init();
 /*
 initialising the variables that we previously declared
 incorporated into a function to be reused in the 'new game' event listener
 */
-function init() {
+function init() {       
     scores = [0,0];
     roundScore = 0; //current score of the ronud of the active player 
     activePlayer = 0; //Player 0 || Player 1
     //initially removes the dice from view
     document.querySelector('.dice').style.display = 'none'; 
+    gameActive = true; 
 }
 //changes the active player in the HTML, by default player 1 is active
 function togglePlayer() {
@@ -34,6 +35,13 @@ function clearCurrentScore() {
 }
 //clears the global score of both players - used when creating a new game
 function clearUIScores() {
+    document.getElementById('name-0').textContent = 'Player 1';
+    document.getElementById('name-1').textContent = 'Player 2';
+    document.querySelector('.player-0-panel').classList.remove('winner');        
+    document.querySelector('.player-1-panel').classList.remove('winner');  
+    document.querySelector('.player-0-panel').classList.remove('active');        
+    document.querySelector('.player-1-panel').classList.remove('active'); 
+    document.querySelector('.player-0-panel').classList.add('active');        
     document.getElementById('score-0').textContent = 0;
     document.getElementById('score-1').textContent = 0;
     document.getElementById('current-0').textContent = 0;
@@ -46,6 +54,7 @@ Adds the score to the current round score if the dice roll != one.
 Else, the current round score is lost and the turn is passed to the opponent.
 */
 document.querySelector('.btn-roll').addEventListener('click', function() {
+    if (gameActive) {
     //1. Generate a random number
     var diceNumber = Math.floor((Math.random() * 6) + 1);
     //2. Display the result
@@ -63,7 +72,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         //ternary operator to swap turns of the active player 
         activePlayer === 0 ? activePlayer = 1 : activePlayer = 0; 
         togglePlayer();
-    }
+    }}
 });
 /*
 The event listener for the 'hold' button: 
@@ -71,6 +80,7 @@ Saves the players current (round score) to the global score
 Passes the turn to the other player if the active player has not yet achieved a score of 100.
 */
 document.querySelector('.btn-hold').addEventListener('click', function() {
+    if (gameActive) {
     //Add CURRENT score to the GLOBAL score
     scores[activePlayer] += roundScore;
     //Update the UI
@@ -78,12 +88,15 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     //Check 
     if (scores[activePlayer] >= 100) {
         document.getElementById('name-'+activePlayer).textContent = 'WINNER!';
+        document.querySelector('.player-'+activePlayer+'-panel').classList.add('winner');
+        document.querySelector('.player-'+activePlayer+'-panel').classList.remove('active'); 
+        gameActive = false;       
     } else {
         roundScore = 0;
         clearCurrentScore();
         activePlayer === 0 ? activePlayer = 1 : activePlayer = 0; 
         togglePlayer();
-    }
+    }}
 });
 /*
 The event listener for the 'new game' button:
