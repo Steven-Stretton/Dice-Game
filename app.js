@@ -11,12 +11,18 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 */
 var scores, roundScore, activePlayer;
-//initialising the variables that we previously declared variables
-scores = [0,0];
-roundScore = 0; //current score of the ronud of the active player 
-activePlayer = 0; //Player 0 || Player 1
-//initially removes the dice from view
-document.querySelector('.dice').style.display = 'none'; 
+init();
+/*
+initialising the variables that we previously declared
+incorporated into a function to be reused in the 'new game' event listener
+*/
+function init() {
+    scores = [0,0];
+    roundScore = 0; //current score of the ronud of the active player 
+    activePlayer = 0; //Player 0 || Player 1
+    //initially removes the dice from view
+    document.querySelector('.dice').style.display = 'none'; 
+}
 //changes the active player in the HTML, by default player 1 is active
 function togglePlayer() {
     document.querySelector('.player-0-panel').classList.toggle('active');
@@ -85,10 +91,6 @@ Resets all of the values
 Resets the UI values
 */
 document.querySelector('.btn-new').addEventListener('click', function() {
-    scores[0] = 0
-    scores[1] = 0
-    roundScore = 0;
-    //randomly selects the first or second player to start the new game.
-    activePlayer = 0;
+    init();
     clearUIScores();
 });
