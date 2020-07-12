@@ -1,6 +1,5 @@
 # Dice-Game
-Dice Game Project
-'a.k.a Pig'
+#### Dice Game Project 'a.k.a Pig Game'
 
 GAME RULES:
 - The game has 2 players, playing in rounds
