@@ -1,7 +1,7 @@
 # Dice-Game
 #### Dice Game Project 'a.k.a Pig Game'
 
-GAME RULES:
+**GAME RULES:**
 - The game has 2 players, playing in rounds
 - In each turn, a player rolls a dice as many times as they whish. Each dice roll gets added to their ROUND score.
 - BUT, if the player rolls a 1, their entire ROUND score gets wiped. After that, it's the next player's turn.
